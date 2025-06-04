@@ -4,7 +4,7 @@ const nodemailer = require("nodemailer")
 
 const registrationEmail = async (name, email, password)=>{
 
-    const mailTranspot = nodemailer.createTransport({
+    const mailTransport = nodemailer.createTransport({
         service: "gmail",
         auth: {
             user: `${process.env.EMAIL}`,
@@ -32,6 +32,7 @@ const validEmail = (email) => {
   }
 
 module.exports = {
-    registrationEmail
+    registrationEmail,
+    validEmail
 }
 

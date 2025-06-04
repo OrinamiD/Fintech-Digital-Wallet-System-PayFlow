@@ -1,31 +1,25 @@
 
 
 
+const nodemailer = require("nodemailer");
 
+const forgotPasswordEmail = async (email, token) => {
 
+  try {
 
-const nodemailer = require("nodemailer")
-
-const forgotPasswordEmail = async ( email, token) =>{
-
-    try {
-        
-        const mailTranspot = nodemailer.createTransport({
-        
-        service: "gmail",
-
-        auth: {
-            user: `${process.env.EMAIL}`,
-            pass: `${process.env.EMAIL_PASSWORD}`
-        }
-
-    })
+    const mailTransport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: `${process.env.EMAIL}`,
+        pass:` ${process.env.EMAIL_PASSWORD}`,
+      },
+    });
 
     const emailDetails = {
-        from: `${process.env.EMAIL}`,
-        to: `${email}`,
-        subject: "Forget password Notification",
-         html: `
+      from: `${process.env.EMAIL}`,
+      to: `${email}`,
+      subject: "Forget Password Notification",
+      html: `
         <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
           <table width="100%" cellpadding="0" cellspacing="0" style="padding: 20px;">
             <tr>
@@ -62,17 +56,18 @@ const forgotPasswordEmail = async ( email, token) =>{
             </tr>
           </table>
         </body>
-      `
-    }
+      `,
+    };
 
-    await mailTranspot.sendMail(emailDetails)
-   
-    return res.status(200).json({message: "successful", emailDetails})
+    await mailTransport.sendMail(emailDetails);
+    return { success: true, message: "Email sent successfully", emailDetails };
 
   } catch (error) {
-    return res.status(500).json({message: error.message})
+    return {message: error.message };
   }
-}
-
+};
 
 module.exports = forgotPasswordEmail
+
+
+

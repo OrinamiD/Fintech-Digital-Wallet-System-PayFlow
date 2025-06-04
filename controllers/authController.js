@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken")
 const Transaction = require("../models/transactionModel")
 const User = require("../models/userModel")
 const Wallet = require("../models/walletModel")
-
+const forgotPasswordEmail = require("../sendEmails/forgotPassword")
+const { registrationEmail } = require("../sendEmails/registrationEmail")
 
 
 
@@ -19,7 +20,7 @@ const handleUserRegistration = async (req, res)=>{
 
     
         try {
-            
+        
             
         const { name, email, password} = req.body
     
@@ -50,9 +51,9 @@ const handleUserRegistration = async (req, res)=>{
 
                 
                 // send email
-// await registrationEmail(name, email, password)
-                
-    
+await registrationEmail(name, email, password)
+
+
             return res.status(201).json({message: "Registration successfull",
                 newUser:{ name, email },
                 wallet
@@ -132,6 +133,7 @@ return res.status(200).json({message: "Please check your email inbox"})
 const handleResetPassword = async (req, res)=>{
 
     try {
+        console.log(user.req)
         
         const {password} = req.body
 
