@@ -13,7 +13,13 @@ const { registrationEmail } = require("../sendEmails/registrationEmail")
 
 
 const handleWelcomeMessage = async (req, res)=>{
-    return res.status(200).json({message: "Welcome to Fintech Digital Wallet System "})
+   try {
+    
+     return res.status(200).json({message: "Welcome to Fintech Digital Wallet System "})
+
+   } catch (error) {
+     return res.status(200).json({message: error.message})
+   }
 }
 
 const handleUserRegistration = async (req, res)=>{
@@ -84,9 +90,9 @@ const handleUserLogin = async (req, res)=>{
             return res.status(400).json({message: "Incorrect password or email"})
         }
 
-        const accessToken = jwt.sign({user_id: user?._id}, `${process.env.ACCESS_TOKEN}`, {expiresIn: "30h"})
+        const accessToken = jwt.sign({user_id: user?._id}, `${process.env.ACCESS_TOKEN}`, {expiresIn: "7m"})
 
-        const refreshToken = jwt.sign({user_id: user?._id}, `${process.env.REFRESH_TOKEN}`, {expiresIn: "30d"})
+        const refreshToken = jwt.sign({user_id: user?._id}, `${process.env.REFRESH_TOKEN}`, {expiresIn: "7d"})
 
 
          

@@ -14,8 +14,8 @@ const handleMoneyTransfer = async (req, res)=>{
      const {_id, email, sender, receiver, balance, amount } = req.body 
         
         // find the sender by email
-      const senderUser = await User.findOne({email: email })
-
+      const senderUser = await User.findOne({ email })
+// req.user?.email
       if(!senderUser){
         return res.status(404).json({message: "User account not found"})
       }
@@ -27,7 +27,7 @@ const handleMoneyTransfer = async (req, res)=>{
       }
 
       // find receiver by email
-      const receiverUser = await User.findOne({email: req.body.receiver})
+      const receiverUser = await User.findOne({email:req.body.receiver })
    
 
       if(!receiverUser){
