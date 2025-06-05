@@ -15,10 +15,11 @@ const handleMoneyTransfer = async (req, res)=>{
         
         // find the sender by email
       const senderUser = await User.findOne({ email })
-// req.user?.email
+        // req.user?.email
       if(!senderUser){
         return res.status(404).json({message: "User account not found"})
       }
+  
 
       const senderWallet = await Wallet.findOne({user_id: senderUser?._id})
 
@@ -53,9 +54,9 @@ const handleMoneyTransfer = async (req, res)=>{
      await senderWallet.save()
      await receiverWallet.save()
 
-      await new Transaction({ sender_id: sender?._id, receiver_id: receiver?._id, amount, type: 'debit', Date: new Date }).save()
+      await new Transaction({ sender_id: sender?._id, receiver_id: receiver?._id, sender, receiver, amount, type: 'debit', Date: new Date }).save()
 
-    await new Transaction({ sender_id: sender?._id, receive_id: receiver?._id, amount, type: 'credit' }).save()
+    await new Transaction({ sender_id: sender?._id, receive_id: receiver?._id, sender, receiver, amount, type: 'credit' }).save()
 
 
 
@@ -115,7 +116,7 @@ const handleGetUserWallet = async (req, res)=>{
     
       const { user_id } = req.body
 
-    const wallet = await Wallet.find({user_id})
+    const wallet = await Wallet.findOne({user_id})
 
     if(!wallet){
         return res.status(404).json({message: "User account not found"})
