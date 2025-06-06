@@ -12,12 +12,17 @@ const mongoose = require("mongoose")
 
 const cors = require("cors")
 
+const cookie = require("cookies")
+
 
 const routes = require("./routes")
+// const cookieparser = require("cookies-parser")
 
 const PORT = `${process.env.PORT}` || 5000
 
 const app = express()
+
+// app.use(cookieparser())
 
 app.use(express.json())
 
@@ -37,6 +42,7 @@ console.log(`Server running on PORT ${PORT}`)
 
 
 app.use("/api",routes)
+
 
 
 

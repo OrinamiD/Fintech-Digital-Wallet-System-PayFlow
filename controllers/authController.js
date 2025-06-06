@@ -94,6 +94,14 @@ const handleUserLogin = async (req, res)=>{
 
         const refreshToken = jwt.sign({user_id: user?._id}, `${process.env.REFRESH_TOKEN}`, {expiresIn: "7d"})
 
+        // const refresh_token = createrefreshTken({user_id: user?._id})
+        // res.cookie('refreshtoken', refresh_token, {
+        //     httpOnly: true,
+        //     path: '/user/refresh_token',
+        //     expiresIn: "7d"
+
+        // })
+
 
          
 
@@ -143,13 +151,15 @@ const handleResetPassword = async (req, res)=>{
         
         const {password} = req.body
 
-        const user = await User.findOne({email: req.user?.email})
+        const user = await User.findOne({id: req.user?._id})
 
         if(!user){
             return res.status(404).json({message: "User account not found"})
         }
 
         const hashedpassword = await bcrypt.hash(password, 12)
+
+        // await User.findOneAndUpdate({id: req.user?._id}, {password: hashedpassword})
 
         user.password = hashedpassword
 
@@ -171,11 +181,24 @@ const handleResetPassword = async (req, res)=>{
 
 }
 
+const handleLogOut = async (req, res)=>{
+
+    try {
+        
+        res.clearCookie('refreshToken', {path: '/user/refresh_token'})
+        return res.status(200).json({message: "Logged out."})
+    } catch (error) {
+        
+        return res.status(500).json({message: error.message})
+    }
+}
+
 module.exports = {
      handleUserRegistration,
      handleUserLogin,
      handleForgotPassword,
      handleResetPassword,
-     handleWelcomeMessage
+     handleWelcomeMessage,
+     handleLogOut
 
 }
