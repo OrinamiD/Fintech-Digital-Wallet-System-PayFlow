@@ -12,7 +12,7 @@ const mongoose = require("mongoose")
 
 const cors = require("cors")
 
-const cookie = require("cookies")
+// const cookie = require("cookies-parser")
 
 
 const routes = require("./routes")
