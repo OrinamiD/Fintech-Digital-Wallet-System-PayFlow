@@ -12,7 +12,7 @@ const mongoose = require("mongoose")
 
 const cors = require("cors")
 
-// const cookie = require("cookies-parser")
+// const cookieParser = require("cookies-parser")
 
 
 const routes = require("./routes")
@@ -22,7 +22,7 @@ const PORT = `${process.env.PORT}` || 5000
 
 const app = express()
 
-// app.use(cookieparser())
+// app.use(cookie-parser())
 
 app.use(express.json())
 
@@ -41,27 +41,10 @@ console.log(`Server running on PORT ${PORT}`)
 })
 
 
-app.use("/api",routes)
+app.use("/api/v1",routes)
 
 
 
 
 
-//  // get all users in the database
-
-// //  app.get("/all-users", async ( req, res)=>{
-
-// //     const user = await User.find()
-
-// //     return res.status(200).json({message: "successful", user})
-// //  })
-
-// // check all wallet in the database
-
-// //  app.get("/all-wallet", auth, async (req, res)=>{
-
-// //     const users = await Wallet.find()
-
-// //      return res.status(200).json({message: "successful", users})
-// //  })
 

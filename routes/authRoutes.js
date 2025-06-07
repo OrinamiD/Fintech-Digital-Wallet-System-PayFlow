@@ -1,7 +1,7 @@
 
 
 const express = require("express")
-const { handleWelcomeMessage, handleUserRegistration, handleUserLogin, handleForgotPassword, handleResetPassword, handleLogOut } = require("../controllers/authController")
+const { handleWelcomeMessage, handleUserRegistration, handleUserLogin, handleForgotPassword, handleResetPassword} = require("../controllers/authController")
 const { validateRegistration, validateLogin, validateFogotPaasword, validateResetPassword } = require("../middleware")
 
 const router = express.Router()
@@ -22,7 +22,8 @@ router.post("/forgot-password", validateFogotPaasword, handleForgotPassword)
  // Rest password
 router.patch("/reset-password", validateResetPassword, handleResetPassword)
 
-router.post("/logout", handleLogOut)
+
+// router.post("/logout", handleLogOut)
 
 
 

@@ -3,15 +3,14 @@
 
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-
 const Transaction = require("../models/transactionModel")
 const User = require("../models/userModel")
 const Wallet = require("../models/walletModel")
 const forgotPasswordEmail = require("../sendEmails/forgotPassword")
-const { registrationEmail } = require("../sendEmails/registrationEmail")
+const { registrationEmail, } = require("../sendEmails/registrationEmail")
 
 
-
+// welcome message
 const handleWelcomeMessage = async (req, res)=>{
    try {
     
@@ -22,6 +21,7 @@ const handleWelcomeMessage = async (req, res)=>{
    }
 }
 
+// sign-up
 const handleUserRegistration = async (req, res)=>{
 
     
@@ -71,6 +71,7 @@ await registrationEmail(name, email, password)
         }
     }
 
+// login
 const handleUserLogin = async (req, res)=>{
 
 
@@ -94,17 +95,6 @@ const handleUserLogin = async (req, res)=>{
 
         const refreshToken = jwt.sign({user_id: user?._id}, `${process.env.REFRESH_TOKEN}`, {expiresIn: "7d"})
 
-        // const refresh_token = createrefreshTken({user_id: user?._id})
-        // res.cookie('refreshtoken', refresh_token, {
-        //     httpOnly: true,
-        //     path: '/user/refresh_token',
-        //     expiresIn: "7d"
-
-        // })
-
-
-         
-
         return res.status(200).json({message: "Login successfull",
           user,
           accessToken
@@ -119,6 +109,7 @@ const handleUserLogin = async (req, res)=>{
     
 }
 
+// forgot password
 const handleForgotPassword = async (req, res)=>{
 
    try {
@@ -144,6 +135,7 @@ return res.status(200).json({message: "Please check your email inbox"})
    }
  }
 
+ // reset password
 const handleResetPassword = async (req, res)=>{
 
     try {
@@ -181,17 +173,18 @@ const handleResetPassword = async (req, res)=>{
 
 }
 
-const handleLogOut = async (req, res)=>{
+// const handleLogOut = async (req, res)=>{
 
-    try {
+//     try {
         
-        res.clearCookie('refreshToken', {path: '/user/refresh_token'})
-        return res.status(200).json({message: "Logged out."})
-    } catch (error) {
+//         res.clearCookie('refreshToken', {path: '/user/refresh_token'})
+//         return res.status(200).json({message: "Logged out."})
+//     } catch (error) {
         
-        return res.status(500).json({message: error.message})
-    }
-}
+//         return res.status(500).json({message: error.message})
+//     }
+// }
+
 
 module.exports = {
      handleUserRegistration,
@@ -199,6 +192,6 @@ module.exports = {
      handleForgotPassword,
      handleResetPassword,
      handleWelcomeMessage,
-     handleLogOut
+    //  handleLogOut
 
 }

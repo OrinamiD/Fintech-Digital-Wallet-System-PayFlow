@@ -7,7 +7,7 @@ const { handleMoneyTransfer, handleFundWallet, handleGetUserWallet, handleGetAll
 const router = express.Router()
 
 // Transfer funds betwen users
-router.post("/money-transfer", validateMoneyTransfer, auth,handleMoneyTransfer)
+router.post("/money-transfer", validateMoneyTransfer, auth, handleMoneyTransfer)
 
 // funding users account
 router.post("/fund-wallet",  validateFundingWallet, auth, handleFundWallet)

@@ -5,6 +5,7 @@ const User = require("../models/userModel")
 const Wallet = require("../models/walletModel")
 
 
+// transfer money between users
 const handleMoneyTransfer = async (req, res)=>{
 
   try {
@@ -42,7 +43,7 @@ const handleMoneyTransfer = async (req, res)=>{
       }
         
 
-        if(senderWallet.balance < amount){
+        if( amount > senderWallet.balance){
              return res.status(400).json({message: "Insufficient balance"})
         }
 
@@ -70,7 +71,7 @@ const handleMoneyTransfer = async (req, res)=>{
     
 }
 
-
+// fund wallet
 const handleFundWallet = async (req, res)=>{
 
     try {
@@ -108,6 +109,7 @@ const handleFundWallet = async (req, res)=>{
 
 }
 
+// get walllet
 const handleGetUserWallet = async (req, res)=>{
 
   try {
@@ -136,7 +138,7 @@ const handleGetAllTransactions = async (req, res)=>{
 
     console.log(req.user)
   
-     const transaction = await Transaction.find()
+     const transaction = await Transaction.find({id: req.user?._id})
 
        if(!transaction){
         return res.status(404).json({message: "No transaction found"})
@@ -183,6 +185,8 @@ const handleUserTransactions =  async (req, res)=>{
  }
 
 
+
+
  module.exports = {
     handleMoneyTransfer,
     handleFundWallet,
@@ -190,3 +194,26 @@ const handleUserTransactions =  async (req, res)=>{
     handleGetAllTransactions,
     handleUserTransactions
  }
+
+
+
+
+
+ 
+//  // get all users in the database
+
+// //  app.get("/all-users", async ( req, res)=>{
+
+// //     const user = await User.find()
+
+// //     return res.status(200).json({message: "successful", user})
+// //  })
+
+// // check all wallet in the database
+
+// //  app.get("/all-wallet", auth, async (req, res)=>{
+
+// //     const users = await Wallet.find()
+
+// //      return res.status(200).json({message: "successful", users})
+// //  })

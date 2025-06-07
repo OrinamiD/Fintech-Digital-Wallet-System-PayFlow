@@ -5,6 +5,7 @@ const Transaction = require("../models/transactionModel")
 const User = require("../models/userModel")
 const Wallet = require("../models/walletModel")
 const jwt = require("jsonwebtoken")
+const { validEmail } = require("../sendEmails/registrationEmail")
 
 
 
@@ -22,6 +23,10 @@ const validateRegistration = async (req, res, next)=>{
     
         if(!email){
              errors.push("Enter your email")
+        }
+
+        if(!validEmail(email)){
+             errors.push("Invalid Email")
         }
     
         if(!password){
@@ -52,11 +57,11 @@ const validateLogin = async (req, res, next)=>{
         }
 
         if(!password){
-                 errors.push("Enter your password")
+         errors.push("Enter your password")
         }
 
         if(errors.length > 0 ){
-             return res.status(400).json({message: errors})
+            return res.status(400).json({message: errors})
         }
 next()
 
@@ -82,7 +87,7 @@ const auth = async (req, res, next)=>{
          return res.status(401).json({Message: " Please login"})
     }
 
-    const user = await User.find(decoded.id)
+    const user = await User.find(decoded?.id)
 
     if(!user){
         return res.status(404).json({message: "Incorrect details"})
