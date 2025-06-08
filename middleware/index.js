@@ -1,6 +1,5 @@
 
-
-// const { validEmail } = require("../Controller")
+const joi = require("joi")
 const Transaction = require("../models/transactionModel")
 const User = require("../models/userModel")
 const Wallet = require("../models/walletModel")
@@ -40,6 +39,28 @@ const validateRegistration = async (req, res, next)=>{
         if(errors.length > 0 ){
             return res.status(401).json({message: errors})
         }
+
+        const signupSchema = Joi.object({
+      email: Joi.string()
+        .min(6)
+        .max(60)
+        .email({ tlds: { allow: ['com', 'net'] } })
+        .required(),
+
+      password: Joi.string()
+        .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/)
+        .required()
+        .messages({
+          "string.pattern.base":
+            "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.",
+        }),
+    });
+
+    const  { error } = signupSchema.validate({ email, password });
+
+    if (error) {
+      return res.status(400).json({ message: error.message });
+    }
                    
 next()
 

@@ -46,7 +46,8 @@ const handleUserRegistration = async (req, res)=>{
             password: hashedPassword
             })
     
-             await newUser.save()
+            const result =  await newUser.save()
+            result.password = undefined;
     
             const wallet = new Wallet({
                 user_id: newUser?._id,
@@ -61,7 +62,7 @@ await registrationEmail(name, email, password)
 
 
             return res.status(201).json({message: "Registration successfull",
-                newUser:{ name, email },
+                result,
                 wallet
             })
             

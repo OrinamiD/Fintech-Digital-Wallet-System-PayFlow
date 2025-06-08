@@ -16,7 +16,6 @@ const cors = require("cors")
 
 
 const routes = require("./routes")
-// const cookieparser = require("cookies-parser")
 
 const PORT = `${process.env.PORT}` || 5000
 
