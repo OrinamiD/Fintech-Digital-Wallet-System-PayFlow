@@ -163,12 +163,21 @@ next()
 
 const validateFundingWallet = async (req, res, next)=>{
 
-   const { email, sender, receiver, type, balance, amount } = req.body 
+   const { email, amount } = req.body 
 
     const errors = []
 
     if(!email){
         errors.push("Please provide your email")
+    }
+
+      if(!amount){
+        errors.push("Please provide the amount")
+    }
+
+
+    if(amount < 100 ){
+      errors.push("Amount must be greater than 99 naira")
     }
 
 
@@ -199,6 +208,14 @@ const validateMoneyTransfer = async (req, res, next)=>{
       if(!amount){
         errors.push("please, provide your amount")
      }
+     
+     if(amount <= 999){
+      errors.push("minimum amount to send is 1000 naira")
+     }
+
+    if( balance < amount){
+      errors.push("Insufficient amount")
+        }
 
      if(errors.length > 0 ){
         return res.status(200).json({message: errors})

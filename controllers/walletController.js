@@ -43,9 +43,9 @@ const handleMoneyTransfer = async (req, res)=>{
       }
         
 
-        if( amount > senderWallet.balance){
-             return res.status(400).json({message: "Insufficient balance"})
-        }
+        // if( amount > senderWallet.balance){
+        //      return res.status(400).json({message: "Insufficient balance"})
+        // }
 
 
       senderWallet.balance -= Number(amount)
