@@ -209,11 +209,11 @@ const validateMoneyTransfer = async (req, res, next)=>{
         errors.push("please, provide your amount")
      }
      
-     if(amount <= 999){
-      errors.push("minimum amount to send is 1000 naira")
+     if(amount <= 99){
+      errors.push("minimum amount to send is 100 naira")
      }
 
-    if( balance < amount){
+    if( amount > balance){
       errors.push("Insufficient amount")
         }
 
