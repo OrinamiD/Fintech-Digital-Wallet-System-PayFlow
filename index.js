@@ -40,9 +40,7 @@ console.log(`Server running on PORT ${PORT}`)
 })
 
 
-app.use("/api",routes)
-
-
+app.use("/api", routes)
 
 
 

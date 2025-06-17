@@ -40,27 +40,27 @@ const validateRegistration = async (req, res, next)=>{
             return res.status(401).json({message: errors})
         }
 
-        const signupSchema = Joi.object({
-      email: Joi.string()
-        .min(6)
-        .max(60)
-        .email({ tlds: { allow: ['com', 'net'] } })
-        .required(),
+    //     const signupSchema = Joi.object({
+    //   email: Joi.string()
+    //     .min(6)
+    //     .max(60)
+    //     .email({ tlds: { allow: ['com', 'net'] } })
+    //     .required(),
 
-      password: Joi.string()
-        .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/)
-        .required()
-        .messages({
-          "string.pattern.base":
-            "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.",
-        }),
-    });
+    //   password: Joi.string()
+    //     .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&^_-])[A-Za-z\d@$!%*?#&^_-]{8,}$/)
+    //     .required()
+    //     .messages({
+    //       "string.pattern.base":
+    //         "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.",
+    //     }),
+    // });
 
-    const  { error } = signupSchema.validate({ email, password });
+    // const  { error } = signupSchema.validate({ email, password });
 
-    if (error) {
-      return res.status(400).json({ message: error.message });
-    }
+    // if (error) {
+    //   return res.status(400).json({ message: error.message });
+    // }
                    
 next()
 
@@ -209,12 +209,12 @@ const validateMoneyTransfer = async (req, res, next)=>{
         errors.push("please, provide your amount")
      }
      
-     if(amount <= 99){
+     if(Number(amount) <= 99){
       errors.push("minimum amount to send is 100 naira")
      }
 
-    if( amount > balance){
-      errors.push("Insufficient amount")
+    if( Number(amount) > balance){
+      errors.push("Insufficient balance")
         }
 
      if(errors.length > 0 ){
