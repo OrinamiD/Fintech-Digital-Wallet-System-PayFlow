@@ -143,7 +143,9 @@ const handleResetPassword = async (req, res) => {
 
     user.password = hashedpassword;
 
-    await user.save();
+    const result = await user.save();
+
+    result.password = undefined
 
     const accessToken = jwt.sign(
       { user: user_id },
@@ -158,7 +160,7 @@ const handleResetPassword = async (req, res) => {
     );
 
     return res.status(200).json(
-      { message: "Password Reset successful", accessToken, user },
+      { message: "Password Reset successful", accessToken, result},
 
       refreshToken
     );
