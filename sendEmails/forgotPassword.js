@@ -1,17 +1,12 @@
-
-
-
 const nodemailer = require("nodemailer");
 
 const forgotPasswordEmail = async (email, token) => {
-
   try {
-
     const mailTransport = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: `${process.env.EMAIL}`,
-        pass:` ${process.env.EMAIL_PASSWORD}`,
+        pass: ` ${process.env.EMAIL_PASSWORD}`,
       },
     });
 
@@ -61,13 +56,9 @@ const forgotPasswordEmail = async (email, token) => {
 
     await mailTransport.sendMail(emailDetails);
     return { success: true, message: "Email sent successfully", emailDetails };
-
   } catch (error) {
-    return {message: error.message };
+    return { message: error.message };
   }
 };
 
-module.exports = forgotPasswordEmail
-
-
-
+module.exports = forgotPasswordEmail;

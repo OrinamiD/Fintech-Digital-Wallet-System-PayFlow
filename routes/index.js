@@ -1,12 +1,7 @@
+const authRoutes = require("./authRoutes");
 
-const authRoutes = require("./authRoutes")
+const walletRoutes = require("./walletRoutes");
 
-const walletRoutes = require("./walletRoutes")
+const routes = [authRoutes, walletRoutes];
 
-const routes = [
-    authRoutes,
-    walletRoutes
-]
-
-
-module.exports = routes
+module.exports = routes;

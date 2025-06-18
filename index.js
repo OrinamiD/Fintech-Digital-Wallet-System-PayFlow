@@ -1,47 +1,43 @@
+const express = require("express");
 
+const bcrypt = require("bcryptjs");
 
-const express = require("express")
+const dotenv = require("dotenv").config();
 
-const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken");
 
-const dotenv = require("dotenv").config()
+const mongoose = require("mongoose");
 
-const jwt = require("jsonwebtoken")
-
-const mongoose = require("mongoose")
-
-const cors = require("cors")
+const cors = require("cors");
 
 // const cookieParser = require("cookies-parser")
 
+const routes = require("./routes");
 
-const routes = require("./routes")
+const PORT = `${process.env.PORT}` || 5000;
 
-const PORT = `${process.env.PORT}` || 5000
-
-const app = express()
+const app = express();
 
 // app.use(cookie-parser())
 
-app.use(express.json())
+app.use(express.json());
 
-app.use(cors())
+app.use(cors());
 
+//  Handle JSON parsing errors
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    return res.status(400).json({ error: "Invalid JSON" });
+  }
+  next();
+});
 
+mongoose.connect(process.env.MONGODB_URL).then(() => {
+  console.log("MongoDB connected successfully...");
 
- 
-mongoose.connect(process.env.MONGODB_URL)
-.then(()=>{
-console.log("MongoDB connected successfully...")
+  app.listen(PORT, () => {
+    console.log(`Server running on PORT ${PORT}`);
+  });
+});
 
-app.listen(PORT, ()=>{
-console.log(`Server running on PORT ${PORT}`)
- })
-})
-
-
-app.use("/api", routes)
-
-
-
-
+app.use("/api", routes);
