@@ -11,6 +11,7 @@ const {
   validateLogin,
   validateFogotPaasword,
   validateResetPassword,
+  auth,
 } = require("../middleware");
 
 const router = express.Router();
@@ -25,10 +26,10 @@ router.post("/sign-up", validateRegistration, handleUserRegistration);
 router.post("/login", validateLogin, handleUserLogin);
 
 // fotgotten password
-router.post("/forgot-password", validateFogotPaasword, handleForgotPassword);
+router.post("/forgot-password", validateFogotPaasword, auth, handleForgotPassword);
 
 // Rest password
-router.patch("/reset-password", validateResetPassword, handleResetPassword);
+router.patch("/reset-password", validateResetPassword, auth, handleResetPassword);
 
 // router.post("/logout", handleLogOut)
 
