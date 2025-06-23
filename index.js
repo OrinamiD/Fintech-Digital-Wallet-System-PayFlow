@@ -13,6 +13,7 @@ const cors = require("cors");
 // const cookieParser = require("cookies-parser")
 
 const routes = require("./routes");
+const errorHandler = require("./middleware/errorHandler");
 
 const PORT = `${process.env.PORT}` || 5000;
 
@@ -24,14 +25,6 @@ app.use(express.json());
 
 app.use(cors());
 
-//  Handle JSON parsing errors
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
-    return res.status(400).json({ error: "Invalid JSON" });
-  }
-  next();
-});
-
 mongoose.connect(process.env.MONGODB_URL).then(() => {
   console.log("MongoDB connected successfully...");
 
@@ -41,3 +34,6 @@ mongoose.connect(process.env.MONGODB_URL).then(() => {
 });
 
 app.use("/api", routes);
+
+//  Handle JSON parsing errors
+app.use(errorHandler);
