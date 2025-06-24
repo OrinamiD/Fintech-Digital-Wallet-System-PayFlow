@@ -35,14 +35,7 @@ const validateRegistration = async (req, res, next) => {
   }
 
   const signupSchema = joi.object({
-    name: joi
-      .string()
-      .required()
-      .pattern(new RegExp("^[A-Za-zs'-]{2,}$"))
-      .messages({
-        "string.pattern.base":
-          "Name must contain only alphabetic characters, spaces, apostrophes, or hyphens. Numbers and special symbols are not allowed.",
-      }),
+    name: joi.string().required(),
 
     email: joi
       .string()
